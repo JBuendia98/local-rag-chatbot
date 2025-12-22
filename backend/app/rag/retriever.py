@@ -1,0 +1,23 @@
+from typing import List
+from embeddings import EmbeddingModel
+from vector_store import VectorStore
+
+
+class Retriever:
+    def __init__(
+        self,
+        vectorstore: VectorStore,
+        embedding_model: EmbeddingModel,
+        top_k: int = 3,
+    ):
+        self.vectorstore = vectorstore
+        self.embedding_model = embedding_model
+        self.top_k = top_k
+
+    def retrieve(self, query: str) -> List[str]:
+        """
+        Given a user query, return top-k relevant document chunks.
+        """
+        query_vector = self.embedding_model.embed([query])[0]
+        results = self.vectorstore.search(query_vector, k=self.top_k)
+        return [text for text, _ in results]
