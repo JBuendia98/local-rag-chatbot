@@ -1,7 +1,7 @@
 from pathlib import Path
 from typing import List
 from pypdf import PdfReader
-from chunker import chunk_text
+from .chunker import chunk_text
 
 
 def load_documents(data_dir: Path) -> List[str]:
